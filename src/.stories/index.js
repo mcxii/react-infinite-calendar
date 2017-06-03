@@ -1,5 +1,5 @@
 /* eslint-disable sort-keys */
-import React, {Component} from 'react';
+import React from 'react';
 import {addDecorator, storiesOf} from '@kadira/storybook';
 import InfiniteCalendar, {
   Calendar,
@@ -58,6 +58,9 @@ storiesOf('Higher Order Components', module)
       selected={{
         start: addDays(new Date(), 2),
         end: addDays(new Date(), 17),
+      }}
+      locale={{
+        headerFormat: 'MMM Do',
       }}
       Component={withRange(withKeyboardSupport(Calendar))}
     />
@@ -181,6 +184,13 @@ storiesOf('Display Options', module)
       display={'years'}
       displayOptions={{
         showMonthsForYears: false,
+      }}
+    />
+  ))
+  .add('Hide Weekdays Helper', () => (
+    <InfiniteCalendar
+      displayOptions={{
+        showWeekdays: false,
       }}
     />
   ));

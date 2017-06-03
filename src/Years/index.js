@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import VirtualList from 'react-tiny-virtual-list';
 import classNames from 'classnames';
 import {emptyFn, getMonthsForYear} from '../utils';
@@ -125,7 +126,7 @@ export default class Years extends Component {
           itemCount={years.length}
           estimatedItemSize={rowHeight}
           itemSize={(index) => heights[index]}
-          scrollToIndex={selectedYearIndex}
+          scrollToIndex={selectedYearIndex !== -1 ? selectedYearIndex : null}
           scrollToAlignment='center'
           renderItem={({index, style}) => {
             const year = years[index];

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {debounce, emptyFn, range, ScrollSpeed} from '../utils';
 import {defaultProps} from 'recompose';
@@ -69,6 +70,7 @@ export default class Calendar extends Component {
       showMonthsForYears: PropTypes.bool,
   		showOverlay: PropTypes.bool,
   		showTodayHelper: PropTypes.bool,
+  		showWeekdays: PropTypes.bool,
       todayHelperRowOffset: PropTypes.number,
     }),
     height: PropTypes.number,
@@ -287,6 +289,7 @@ export default class Calendar extends Component {
       showMonthsForYears,
       showOverlay,
       showTodayHelper,
+      showWeekdays,
     } = this.getDisplayOptions();
     const {display, isScrolling, showToday} = this.state;
     const disabledDates = this.getDisabledDates(this.props.disabledDates);
@@ -323,7 +326,9 @@ export default class Calendar extends Component {
           />
         }
         <div className={styles.container.wrapper}>
-          <Weekdays weekdays={locale.weekdays} weekStartsOn={locale.weekStartsOn} theme={theme} />
+          {showWeekdays &&
+            <Weekdays weekdays={locale.weekdays} weekStartsOn={locale.weekStartsOn} theme={theme} />
+          }
           <div className={styles.container.listWrapper}>
             {showTodayHelper &&
               <Today
