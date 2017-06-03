@@ -30,6 +30,7 @@ export default class MonthList extends Component {
     onDaySelect: PropTypes.func,
     onScroll: PropTypes.func,
     overscanMonthCount: PropTypes.number,
+    renderMonthDay: PropTypes.func,
     rowHeight: PropTypes.number,
     selectedDate: PropTypes.instanceOf(Date),
     showOverlay: PropTypes.bool,
@@ -131,6 +132,7 @@ export default class MonthList extends Component {
       showOverlay,
       theme,
       today,
+      renderMonthDay,
     } = this.props;
 
     let {month, year} = months[index];
@@ -155,6 +157,7 @@ export default class MonthList extends Component {
         theme={theme}
         style={style}
         locale={locale}
+        renderMonthDay={renderMonthDay}
         passThrough={passThrough}
         {...passThrough.Month}
       />

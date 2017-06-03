@@ -23,6 +23,9 @@ export const withDateSelection = compose(
   withImmutableProps(({
     DayComponent,
     onSelect,
+    onDayMouseDown,
+    onDayMouseUp,
+    onDayMouseEnter,
     setScrollDate,
     YearsComponent,
   }) => ({
@@ -30,13 +33,23 @@ export const withDateSelection = compose(
     YearsComponent: enhanceYear(YearsComponent),
   })),
   withState('scrollDate', 'setScrollDate', props => props.selected || new Date()),
-  withProps(({onSelect, setScrollDate, ...props}) => {
+  withProps(({
+    onSelect,
+    onDayMouseDown,
+    onDayMouseEnter,
+    onDayMouseUp,
+    setScrollDate,
+    ...props
+  }) => {
     const selected = sanitizeDate(props.selected, props);
 
     return {
       passThrough: {
         Day: {
           onClick: onSelect,
+          onMouseDown: onDayMouseDown,
+          onMouseEnter: onDayMouseEnter,
+          onMouseUp: onDayMouseUp,
         },
         Years: {
           onSelect: (year) => handleYearSelect(year, {onSelect, selected, setScrollDate}),

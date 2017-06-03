@@ -27,13 +27,29 @@ export default class DefaultCalendar extends Component {
       this.setState({selected});
     }
   }
-  handleSelect = (selected) => {
+  handleSelect = (selected, event) => {
     const {onSelect, interpolateSelection} = this.props;
 
-    if (typeof onSelect === 'function') { onSelect(selected); }
+    if (typeof onSelect === 'function') { onSelect(selected, event); }
 
     this.setState({selected: interpolateSelection(selected, this.state.selected)});
   }
+
+  handleDayMouseEnter = (selected, event) => {
+    const {onDayMouseEnter} = this.props;
+    if (typeof onDayMouseEnter === 'function') { onDayMouseEnter(selected, event); }
+  };
+
+  handleDayMouseDown = (selected, event) => {
+    const {onDayMouseDown} = this.props;
+    if (typeof onDayMouseDown === 'function') { onDayMouseDown(selected, event); }
+  };
+
+  handleDayMouseUp = (selected, event) => {
+    const {onDayMouseUp} = this.props;
+    if (typeof onDayMouseUp === 'function') { onDayMouseUp(selected, event); }
+  };
+
   render() {
     // eslint-disable-next-line no-unused-vars
     const {Component, interpolateSelection, ...props} = this.props;
@@ -42,6 +58,9 @@ export default class DefaultCalendar extends Component {
       <Component
         {...props}
         onSelect={this.handleSelect}
+        onMouseDown={this.handleDayMouseDown}
+        onMouseEnter={this.handleDayMouseEnter}
+        onMouseUp={this.handleDayMouseUp}
         selected={this.state.selected}
       />
     );

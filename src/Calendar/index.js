@@ -29,6 +29,7 @@ export const withDefaultProps = defaultProps({
   HeaderComponent: Header,
   height: 500,
   keyboardSupport: true,
+  longWeekdays: false,
   max: new Date(2050, 11, 31),
   maxDate: new Date(2050, 11, 31),
   min: new Date(1980, 0, 1),
@@ -38,6 +39,7 @@ export const withDefaultProps = defaultProps({
   onScrollEnd: emptyFn,
   onSelect: emptyFn,
   passThrough: {},
+  renderMonthDay: emptyFn,
   rowHeight: 56,
   tabIndex: 1,
   width: 400,
@@ -85,6 +87,7 @@ export default class Calendar extends Component {
       weekdays: PropTypes.arrayOf(PropTypes.string),
       weekStartsOn: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
     }),
+    longWeekdays: PropTypes.bool,
     max: PropTypes.instanceOf(Date),
     maxDate: PropTypes.instanceOf(Date),
     min: PropTypes.instanceOf(Date),
@@ -92,6 +95,7 @@ export default class Calendar extends Component {
     onScroll: PropTypes.func,
     onScrollEnd: PropTypes.func,
     onSelect: PropTypes.func,
+    renderMonthDay: PropTypes.func,
     rowHeight: PropTypes.number,
     tabIndex: PropTypes.number,
     theme: PropTypes.shape({
@@ -273,6 +277,8 @@ export default class Calendar extends Component {
       displayDate,
 			height,
       HeaderComponent,
+      longWeekdays,
+      renderMonthDay,
       rowHeight,
       scrollDate,
       selected,
@@ -327,7 +333,12 @@ export default class Calendar extends Component {
         }
         <div className={styles.container.wrapper}>
           {showWeekdays &&
-            <Weekdays weekdays={locale.weekdays} weekStartsOn={locale.weekStartsOn} theme={theme} />
+            <Weekdays
+              longWeekdays={longWeekdays}
+              weekdays={locale.weekdays}
+              weekdaysShort={locale.weekdaysShort}
+              weekStartsOn={locale.weekStartsOn}
+              theme={theme} />
           }
           <div className={styles.container.listWrapper}>
             {showTodayHelper &&
@@ -358,6 +369,7 @@ export default class Calendar extends Component {
               passThrough={passThrough}
               theme={theme}
               today={today}
+              renderMonthDay={renderMonthDay}
               rowHeight={rowHeight}
               selected={selected}
               scrollDate={scrollDate}
