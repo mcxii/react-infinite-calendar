@@ -6,12 +6,14 @@ import styles from './Weekdays.scss';
 export default class Weekdays extends PureComponent {
   static propTypes = {
     locale: PropTypes.object,
+    longWeekdays: PropTypes.bool,
     theme: PropTypes.object,
   };
 
   render() {
-    const {weekdays, weekStartsOn, theme} = this.props;
-    const orderedWeekdays = [...weekdays.slice(weekStartsOn, 7), ...weekdays.slice(0, weekStartsOn)];
+    const {longWeekdays, weekdaysShort, weekdays, weekStartsOn, theme} = this.props;
+    const days = longWeekdays ? weekdays : weekdaysShort;
+    const orderedWeekdays = [...days.slice(weekStartsOn, 7), ...days.slice(0, weekStartsOn)];
 
     return (
       <ul

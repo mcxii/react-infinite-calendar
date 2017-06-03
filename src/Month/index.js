@@ -22,6 +22,7 @@ export default class Month extends PureComponent {
       today,
       theme,
       passThrough,
+      renderMonthDay,
     } = this.props;
     const currentYear = today.getFullYear();
     const year = monthDate.getFullYear();
@@ -31,6 +32,7 @@ export default class Month extends PureComponent {
     let day = 0;
     let isDisabled = false;
     let isToday = false;
+    let isSameMonth = false;
     let date, days, dow, row;
 
     // Used for faster comparisons
@@ -50,6 +52,7 @@ export default class Month extends PureComponent {
         date = getDateString(year, month, day);
         isToday = (date === _today);
 
+        isSameMonth = (selected && date.substring(0, 6) === _today.substring(0, 6));
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
@@ -71,6 +74,8 @@ export default class Month extends PureComponent {
             monthShort={monthShort}
 						theme={theme}
             year={year}
+            isSameMonth={isSameMonth}
+            renderMonthDay={renderMonthDay}
             {...passThrough.Day}
 					/>
 				);

@@ -4,11 +4,31 @@ import parse from 'date-fns/parse';
 import styles from './Day.scss';
 
 export default class Day extends PureComponent {
-  handleClick = () => {
-    let {date, isDisabled, onClick} = this.props;
-
+  handleClick = (event) => {
+    const {date, isDisabled, onClick} = this.props;
     if (!isDisabled && typeof onClick === 'function') {
-      onClick(parse(date));
+      onClick(parse(date), event);
+    }
+  };
+
+  handleDayMouseEnter = (event) => {
+    const {date, isDisabled, onMouseEnter} = this.props;
+    if (!isDisabled && typeof onMouseEnter === 'function') {
+      onMouseEnter(parse(date), event);
+    }
+  };
+
+  handleDayMouseDown = (event) => {
+    const {date, isDisabled, onMouseDown} = this.props;
+    if (!isDisabled && typeof onMouseDown === 'function') {
+      onMouseDown(parse(date), event);
+    }
+  };
+
+  handleDayMouseUp = (event) => {
+    const {date, isDisabled, onMouseUp} = this.props;
+    if (!isDisabled && typeof onMouseUp === 'function') {
+      onMouseUp(parse(date), event);
     }
   };
 
@@ -19,19 +39,12 @@ export default class Day extends PureComponent {
       isToday,
       locale: {todayLabel},
       monthShort,
-      theme: {textColor},
-      selectionStyle,
     } = this.props;
 
     return (
       <div
         className={styles.selection}
         data-date={date}
-        style={{
-          backgroundColor: this.selectionColor,
-          color: textColor.active,
-          ...selectionStyle,
-        }}
       >
         <span className={styles.month}>
           {isToday ? todayLabel.short || todayLabel.long : monthShort}
@@ -40,7 +53,7 @@ export default class Day extends PureComponent {
       </div>
     );
   }
-  
+
   render() {
     const {
       className,
@@ -53,22 +66,12 @@ export default class Day extends PureComponent {
       isToday,
       isSelected,
       monthShort,
-      theme: {selectionColor, todayColor},
+      renderMonthDay,
       year,
     } = this.props;
-    let color;
-
-    if (isSelected) {
-      color = this.selectionColor = typeof selectionColor === 'function'
-        ? selectionColor(date)
-        : selectionColor;
-    } else if (isToday) {
-      color = todayColor;
-    }
 
     return (
       <li
-        style={color ? {color} : null}
         className={classNames(styles.root, {
           [styles.today]: isToday,
           [styles.highlighted]: isHighlighted,
@@ -77,15 +80,22 @@ export default class Day extends PureComponent {
           [styles.enabled]: !isDisabled,
         }, className)}
         onClick={this.handleClick}
+        onMouseDown={this.handleDayMouseDown}
+        onMouseEnter={this.handleDayMouseEnter}
+        onMouseUp={this.handleDayMouseUp}
         data-date={date}
         {...handlers}
       >
-        {day === 1 && <span className={styles.month}>{monthShort}</span>}
-        {isToday ? <span>{day}</span> : day}
-        {day === 1 &&
-          currentYear !== year &&
-          <span className={styles.year}>{year}</span>}
-        {isSelected && this.renderSelection()}
+        <span className={styles.day}>{day}</span>
+        { typeof renderMonthDay === 'function' && renderMonthDay(date) }
+        { day === 1 &&
+          <span className={styles.month}>
+            { monthShort }
+            {(day === 1 && currentYear !== year) &&
+              <span className={styles.year}>{ year }</span>
+            }
+          </span>
+        }
       </li>
     );
   }
