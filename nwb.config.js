@@ -18,7 +18,6 @@ module.exports = {
     plugins: [
       ['css-modules-transform', {
         generateScopedName: 'Cal__[name]__[local]',
-        "preprocessCss": "./preprocess-css.js",
         "extensions": [".scss"],
         "extractCss": "./styles.css"
       }]

@@ -82,8 +82,9 @@ var Day = function (_PureComponent) {
         day = _props.day,
         date = _props.date,
         isToday = _props.isToday,
-        todayLabel = _props.locale.todayLabel,
-        monthShort = _props.monthShort;
+        _props$locale = _props.locale,
+        todayLabel = _props$locale.todayLabel,
+        monthShort = _props$locale.monthShort;
 
 
     return React.createElement(

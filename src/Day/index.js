@@ -37,8 +37,7 @@ export default class Day extends PureComponent {
       day,
       date,
       isToday,
-      locale: {todayLabel},
-      monthShort,
+      locale: {todayLabel, monthShort},
     } = this.props;
 
     return (
