@@ -82,9 +82,9 @@ var Today = function (_PureComponent) {
 }(PureComponent);
 
 export { Today as default };
-Today.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Today.propTypes = {
   scrollToDate: PropTypes.func,
   show: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   theme: PropTypes.object,
   todayLabel: PropTypes.string
-} : {};
+} : void 0;

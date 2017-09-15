@@ -109,10 +109,6 @@ function getEndOfWeekIndex(weekStartsOn) {
 }
 
 export class ScrollSpeed {
-  clear = () => {
-    this.lastPosition = null;
-    this.delta = 0;
-  };
   getScrollSpeed(scrollOffset) {
     if (this.lastPosition != null) {
       this.delta = scrollOffset - this.lastPosition;
@@ -120,7 +116,10 @@ export class ScrollSpeed {
     this.lastPosition = scrollOffset;
 
     clearTimeout(this._timeout);
-    this._timeout = setTimeout(this.clear, 50);
+    this._timeout = setTimeout(() => {
+      this.lastPosition = null;
+      this.delta = 0;
+    }, 50);
 
     return this.delta;
   }

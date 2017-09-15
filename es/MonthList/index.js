@@ -219,7 +219,7 @@ var MonthList = function (_Component) {
 }(Component);
 
 export { MonthList as default };
-MonthList.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? MonthList.propTypes = {
   disabledDates: PropTypes.arrayOf(PropTypes.string),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
   height: PropTypes.number,
@@ -239,4 +239,4 @@ MonthList.propTypes = process.env.NODE_ENV !== "production" ? {
   theme: PropTypes.object,
   today: PropTypes.instanceOf(Date),
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-} : {};
+} : void 0;

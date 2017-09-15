@@ -110,24 +110,22 @@ function getEndOfWeekIndex(weekStartsOn) {
 
 export var ScrollSpeed = function () {
   function ScrollSpeed() {
-    var _this = this;
-
     _classCallCheck(this, ScrollSpeed);
-
-    this.clear = function () {
-      _this.lastPosition = null;
-      _this.delta = 0;
-    };
   }
 
   ScrollSpeed.prototype.getScrollSpeed = function getScrollSpeed(scrollOffset) {
+    var _this = this;
+
     if (this.lastPosition != null) {
       this.delta = scrollOffset - this.lastPosition;
     }
     this.lastPosition = scrollOffset;
 
     clearTimeout(this._timeout);
-    this._timeout = setTimeout(this.clear, 50);
+    this._timeout = setTimeout(function () {
+      _this.lastPosition = null;
+      _this.delta = 0;
+    }, 50);
 
     return this.delta;
   };
