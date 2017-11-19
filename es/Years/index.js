@@ -197,7 +197,7 @@ var Years = (_temp = _class = function (_Component) {
   showMonths: true
 }, _temp);
 export { Years as default };
-process.env.NODE_ENV !== "production" ? Years.propTypes = {
+Years.propTypes = process.env.NODE_ENV !== "production" ? {
   height: PropTypes.number,
   hideOnSelect: PropTypes.bool,
   locale: PropTypes.object,
@@ -212,4 +212,4 @@ process.env.NODE_ENV !== "production" ? Years.propTypes = {
   theme: PropTypes.object,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   years: PropTypes.array
-} : void 0;
+} : {};

@@ -57,8 +57,8 @@ var Weekdays = function (_PureComponent) {
 }(PureComponent);
 
 export { Weekdays as default };
-process.env.NODE_ENV !== "production" ? Weekdays.propTypes = {
+Weekdays.propTypes = process.env.NODE_ENV !== "production" ? {
   locale: PropTypes.object,
   longWeekdays: PropTypes.bool,
   theme: PropTypes.object
-} : void 0;
+} : {};

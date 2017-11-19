@@ -13,7 +13,6 @@ import format from 'date-fns/format';
 import getDay from 'date-fns/get_day';
 import isSameYear from 'date-fns/is_same_year';
 var styles = {
-  'root': 'Cal__Month__root',
   'rows': 'Cal__Month__rows',
   'row': 'Cal__Month__row',
   'partial': 'Cal__Month__partial',

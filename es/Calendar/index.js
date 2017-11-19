@@ -423,7 +423,7 @@ var Calendar = function (_Component) {
 }(Component);
 
 export { Calendar as default };
-process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
+Calendar.propTypes = process.env.NODE_ENV !== "production" ? {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   DayComponent: PropTypes.func,
@@ -482,5 +482,5 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   }),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   YearsComponent: PropTypes.func
-} : void 0;
+} : {};
 ;
