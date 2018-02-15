@@ -27,7 +27,7 @@ export default class Month extends PureComponent {
     const currentYear = today.getFullYear();
     const year = monthDate.getFullYear();
     const month = monthDate.getMonth();
-    const monthShort = format(monthDate, 'MMM', {locale: locale.locale});
+    const monthShort = locale.monthsShort[month];
     const monthRows = [];
     let day = 0;
     let isDisabled = false;
