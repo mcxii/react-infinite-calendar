@@ -39,7 +39,7 @@ var Weekdays = function (_PureComponent) {
         style: {
           backgroundColor: theme.weekdayColor,
           color: theme.textColor.active,
-          paddingRight: scrollbarSize
+          paddingRight: this.props.monthOverflow ? scrollbarSize : null
         },
         'aria-hidden': true
       },
@@ -60,5 +60,6 @@ export { Weekdays as default };
 Weekdays.propTypes = process.env.NODE_ENV !== "production" ? {
   locale: PropTypes.object,
   longWeekdays: PropTypes.bool,
+  monthOverflow: PropTypes.bool,
   theme: PropTypes.object
 } : {};

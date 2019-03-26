@@ -7,6 +7,7 @@ export default class Weekdays extends PureComponent {
   static propTypes = {
     locale: PropTypes.object,
     longWeekdays: PropTypes.bool,
+    monthOverflow: PropTypes.bool,
     theme: PropTypes.object,
   };
 
@@ -21,7 +22,7 @@ export default class Weekdays extends PureComponent {
         style={{
           backgroundColor: theme.weekdayColor,
           color: theme.textColor.active,
-          paddingRight: scrollbarSize,
+          paddingRight: this.props.monthOverflow ? scrollbarSize : null,
         }}
         aria-hidden={true}
       >

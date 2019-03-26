@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {debounce, emptyFn, range, ScrollSpeed} from '../utils';
@@ -54,6 +55,7 @@ export default class Calendar extends Component {
 
     this.state = {
       display: props.display,
+      monthOverflow: false,
     };
   }
   static propTypes = {
@@ -92,6 +94,7 @@ export default class Calendar extends Component {
     maxDate: PropTypes.instanceOf(Date),
     min: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
+    monthOverflow: PropTypes.bool,
     onScroll: PropTypes.func,
     onScrollEnd: PropTypes.func,
     onSelect: PropTypes.func,
@@ -116,13 +119,15 @@ export default class Calendar extends Component {
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     YearsComponent: PropTypes.func,
   };
+
   componentDidMount() {
     let {autoFocus} = this.props;
-
     if (autoFocus) {
       this.node.focus();
     }
+    this.checkOverflow();
   }
+
   componentWillUpdate(nextProps, nextState) {
     let {min, minDate, max, maxDate} = this.props;
 
@@ -134,6 +139,24 @@ export default class Calendar extends Component {
       this.setState({display: nextProps.display});
     }
   }
+
+  checkOverflow() {
+    var wrapper = ReactDOM.findDOMNode(this._MonthList);
+    if (
+      wrapper instanceof HTMLElement &&
+      wrapper.scrollHeight > wrapper.offsetHeight &&
+      this.state.monthOverflow === false
+    ) {
+      this.setState({ monthOverflow: true });
+    } else if (
+      wrapper instanceof HTMLElement &&
+      wrapper.scrollHeight <= wrapper.offsetHeight &&
+      this.state.monthOverflow === true
+    ) {
+      this.setState({ monthOverflow: false });
+    }
+  }
+
   updateYears(props = this.props) {
     this._min = parse(props.min);
     this._max = parse(props.max);
@@ -338,6 +361,7 @@ export default class Calendar extends Component {
               weekdays={locale.weekdays}
               weekdaysShort={locale.weekdaysShort}
               weekStartsOn={locale.weekStartsOn}
+              monthOverflow={this.state.monthOverflow}
               theme={theme} />
           }
           <div className={styles.container.listWrapper}>

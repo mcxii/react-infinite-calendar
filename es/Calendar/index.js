@@ -9,6 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { debounce, emptyFn, range, ScrollSpeed } from '../utils';
@@ -204,7 +205,8 @@ var Calendar = function (_Component) {
     _this.updateYears(props);
 
     _this.state = {
-      display: props.display
+      display: props.display,
+      monthOverflow: false
     };
     return _this;
   }
@@ -212,10 +214,10 @@ var Calendar = function (_Component) {
   Calendar.prototype.componentDidMount = function componentDidMount() {
     var autoFocus = this.props.autoFocus;
 
-
     if (autoFocus) {
       this.node.focus();
     }
+    this.checkOverflow();
   };
 
   Calendar.prototype.componentWillUpdate = function componentWillUpdate(nextProps, nextState) {
@@ -232,6 +234,15 @@ var Calendar = function (_Component) {
 
     if (nextProps.display !== this.props.display) {
       this.setState({ display: nextProps.display });
+    }
+  };
+
+  Calendar.prototype.checkOverflow = function checkOverflow() {
+    var wrapper = ReactDOM.findDOMNode(this._MonthList);
+    if (wrapper instanceof HTMLElement && wrapper.scrollHeight > wrapper.offsetHeight && this.state.monthOverflow === false) {
+      this.setState({ monthOverflow: true });
+    } else if (wrapper instanceof HTMLElement && wrapper.scrollHeight <= wrapper.offsetHeight && this.state.monthOverflow === true) {
+      this.setState({ monthOverflow: false });
     }
   };
 
@@ -357,6 +368,7 @@ var Calendar = function (_Component) {
           weekdays: locale.weekdays,
           weekdaysShort: locale.weekdaysShort,
           weekStartsOn: locale.weekStartsOn,
+          monthOverflow: this.state.monthOverflow,
           theme: theme }),
         React.createElement(
           'div',
@@ -459,6 +471,7 @@ Calendar.propTypes = process.env.NODE_ENV !== "production" ? {
   maxDate: PropTypes.instanceOf(Date),
   min: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
+  monthOverflow: PropTypes.bool,
   onScroll: PropTypes.func,
   onScrollEnd: PropTypes.func,
   onSelect: PropTypes.func,
